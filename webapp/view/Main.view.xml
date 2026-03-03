@@ -3,12 +3,93 @@
     xmlns="sap.m"
     xmlns:f="sap.ui.layout.form"
     xmlns:core="sap.ui.core">
-    <Page id="page" title="{i18n>title}">
-        <f:SimpleForm editable="true" layout="ResponsiveGridLayout">
+    <Page id="page" title="{i18n>title}" class="sapUiContentPadding">
+        <f:SimpleForm editable="true"
+                      layout="ResponsiveGridLayout"
+                      labelSpanL="4" labelSpanM="4"
+                      columnsL="2" columnsM="2"
+                      emptySpanL="2" emptySpanM="1">
+         <f:toolbar>
+            <Toolbar>
+                <Title text="Personel İzin Kaydı" />
+                <ToolbarSpacer />
+                <Button type="Emphasized" press="onSave" icon="sap-icon://save" />
+            </Toolbar>
+         </f:toolbar>             
          <f:content>
-         
+              <core:Title text="Kişisel Bilgiler" />
+              
+              <Label text="Ad/Soyad" />
+              <Input value="{formModel>/formData/Ad}" placeholder="Adınız"/>
+              <Input value="{formModel>/formData/Soyad}" placeholder="Soyadınız"/>
+
+              <Label text="Telefon" />
+              <Input value="{formModel>/formData/Telefon}" type="Tel" />
+
+              <Label text="Gidilecek Yer (Ülke / Şehir)" />
+              <Input value="{formModel>/formData/GidecegiYer/Ulke}" placeholder="Ülke"/>
+              <Input value="{formModel>/formData/GidecegiYer/Sehir}" placeholder="Şehir"/>
+
+              <Label text="Adres" />
+              <TextArea value="{formModel>/formData/Adres}" rows="2" />
+
+              <core:Title text="İzin Detayları" />
+
+              <Label text="İzin Türü" />
+              <Select 
+                id="idIzinTuru"
+                selectedKey="{formModel>/formData/IzinTuruKey}"
+                items="{path: 'formModel>/IzinTurleri'}">
+                <core:Item key="{formModel>key}" text="{formModel>text}" />
+              </Select>
+
+              <Label text="Ehliyetiniz Var mı?" />
+              <Switch state="{formModel>/formData/EhliyetVarMi}" />
+
+              <Label text="Ehliyet Durumu" visible="{= ${formModel>/formData/EhliyetVarMi} === true }" />
+              <Select visible="{= ${formModel>/formData/EhliyetVarMi} === true }"
+                      items="{path: 'formModel>/EhliyetTipleri'}" 
+                      selectedKey="{formModel>/formData/EhliyetDurumu}"
+                      id="idEhliyetSelect">
+                 <core:Item key="{formModel>key}" text="{formModel>text}" />
+              </Select>
          </f:content>
         </f:SimpleForm>
+
+        <Table items="{formModel>/PersonelIzinListesi}" noDataText="Henüz bir izin kaydı eklenmedi.">
+            <headerToolbar>
+                <OverflowToolbar>
+                    <Title text="İzin Kayıtları" level="H5"/>
+                </OverflowToolbar>
+            </headerToolbar>
+            <columns>
+                <Column>
+                    <Text text="Ad / Soyad" />
+                </Column>
+                <Column minScreenWidth="Tablet" demandPopin="true">
+                    <Text text="Telefon" />
+                </Column>
+                <Column minScreenWidth="Tablet" demandPopin="true">
+                    <Text text="İzin Türü" />
+                </Column>
+                <Column hAlign="End">
+                    <Text text="Ehliyet" />
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <Text text="{formModel>Ad} {formModel>Soyad}" />
+                        <Text text="{formModel>Telefon}" />
+                        <Text text="{formModel>IzinTuruMetni}" />
+                        
+                        <ObjectStatus 
+                            text="{formModel>EhliyetDurumuMetni}"
+                            state="{= ${formModel>EhliyetVarMi} ? 'Success' : 'Error' }" />
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
     </Page>
 </mvc:View>
 
