@@ -70,6 +70,34 @@ sap.ui.define([
                 EhliyetVarMi: true,
                 EhliyetDurumu: ""
             });
+        },
+        onTableSelectionChange: function (oEvent) {
+          var oSelectedItem = oEvent.getParameter("listItem");    
+          var oSelectedData = oSelectedItem.getBindingContext("formModel").getObject();    
+          console.log("Seçilen Personel:", oSelectedData.Ad);  
+       },
+       onDelete: function () {
+            var oTable = this.byId("tblIzin");
+            var oSelectedItem = oTable.getSelectedItem();
+
+            if (!oSelectedItem) {
+                sap.m.MessageToast.show("Lütfen silmek istediğiniz satırı seçiniz.");
+                return;
+            }
+
+            //  /PersonelIzinListesi/2
+            var sPath = oSelectedItem.getBindingContextPath();
+            var iIndex = parseInt(sPath.substring(sPath.lastIndexOf("/") + 1));
+
+            // 3. Modeli ve diziyi alalım
+            var oModel = this.getView().getModel("formModel");
+            var aList = oModel.getProperty("/PersonelIzinListesi");
+
+            var sAdSoyad = aList[iIndex].Ad + " " + aList[iIndex].Soyad;
+            aList.splice(iIndex, 1);
+
+            oModel.setProperty("/PersonelIzinListesi", aList);
+            oTable.removeSelections();
         }
     });
 });

@@ -56,10 +56,15 @@
          </f:content>
         </f:SimpleForm>
 
-        <Table items="{formModel>/PersonelIzinListesi}" noDataText="Henüz bir izin kaydı eklenmedi.">
+        <Table items="{formModel>/PersonelIzinListesi}"
+               mode="SingleSelectLeft" 
+               selectionChange="onTableSelectionChange"
+               noDataText="Henüz bir izin kaydı eklenmedi."
+               id="tblIzin">
             <headerToolbar>
                 <OverflowToolbar>
                     <Title text="İzin Kayıtları" level="H5"/>
+                    <ToolbarSpacer />
                 </OverflowToolbar>
             </headerToolbar>
             <columns>
@@ -90,5 +95,11 @@
                 </ColumnListItem>
             </items>
         </Table>
+
+        <OverflowToolbar>
+            <ToolbarSpacer /> 
+            <Button type="Reject" press="onDelete" icon="sap-icon://delete" />
+        </OverflowToolbar>
+        
     </Page>
 </mvc:View>
