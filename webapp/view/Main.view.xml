@@ -7,11 +7,11 @@
         <f:SimpleForm editable="true"
                       layout="ResponsiveGridLayout"
                       labelSpanL="4" labelSpanM="4"
-                      columnsL="2" columnsM="2"
+                      columnsL="2"   columnsM="2"
                       emptySpanL="2" emptySpanM="1">
          <f:toolbar>
             <Toolbar>
-                <Title text="Personel İzin Kaydı" />
+                <Title text="İzin Formu" />
                 <ToolbarSpacer />
                 <Button type="Emphasized" press="onSave" icon="sap-icon://save" />
             </Toolbar>
@@ -19,18 +19,33 @@
          <f:content>
               <core:Title text="Kişisel Bilgiler" />
               
-              <Label text="Ad/Soyad" />
-              <Input value="{formModel>/formData/Ad}" placeholder="Adınız"/>
-              <Input value="{formModel>/formData/Soyad}" placeholder="Soyadınız"/>
+              <Label text="Ad/Soyad" required="true"/>
+              <Input value="{ path:'formModel>/formData/Ad' ,
+                              type:'sap.ui.model.type.String',
+                              constraints: { minLength: 1 } ,
+                              formatOptions: { parseDefaultValue: true }}" 
+                    valueLiveUpdate="true"
+                    valueStateText="{i18n>msgValidationError}"
+                    placeholder="Adınız"/>
+              <Input value="{ path:'formModel>/formData/Soyad' ,
+                              type:'sap.ui.model.type.String',
+                              constraints: { minLength: 1 } }"
+                     valueLiveUpdate="true"
+                     valueStateText="{i18n>msgValidationError}"
+                     placeholder="Soyadınız"/>
 
-              <Label text="Telefon" />
-              <Input value="{formModel>/formData/Telefon}" type="Tel" />
+              <Label text="Telefon" required="true"/>
+              <Input value="{ path:'formModel>/formData/Telefon' ,
+                              type:'sap.ui.model.type.String',
+                              constraints: { minLength: 1 } }"
+                     valueLiveUpdate="true"
+                     placeholder="Telefon"/>
 
-              <Label text="Gidilecek Yer (Ülke / Şehir)" />
+              <Label text="Gidilecek Yer (Ülke / Şehir)" required="true"/>
               <Input value="{formModel>/formData/GidecegiYer/Ulke}" placeholder="Ülke"/>
               <Input value="{formModel>/formData/GidecegiYer/Sehir}" placeholder="Şehir"/>
 
-              <Label text="Adres" />
+              <Label text="Adres" required="true"/>
               <TextArea value="{formModel>/formData/Adres}" rows="2" />
 
               <core:Title text="İzin Detayları" />
@@ -63,13 +78,12 @@
                id="tblIzin">
             <headerToolbar>
                 <OverflowToolbar>
-                    <Title text="İzin Kayıtları" level="H5"/>
-                    <ToolbarSpacer />
+                    <Title text="İzinler" level="H3" />
                 </OverflowToolbar>
             </headerToolbar>
             <columns>
                 <Column>
-                    <Text text="Ad / Soyad" />
+                    <Text text="Personel" />
                 </Column>
                 <Column minScreenWidth="Tablet" demandPopin="true">
                     <Text text="Telefon" />
@@ -103,3 +117,4 @@
         
     </Page>
 </mvc:View>
+
