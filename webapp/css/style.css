@@ -1,1 +1,7 @@
-/* Enter your custom styles here */
+.sapUiSizeCompact .sapMTB {
+    height: 2.5rem;
+}
+
+.sapUiSizeCompact .sapMListTblRow {
+    height: 2.5rem;
+}

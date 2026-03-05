@@ -25,4 +25,5 @@ server:
       afterMiddleware: fiori-tools-appreload
       configuration:
         flp:
-          theme: sap_horizon
+          theme: sap_horizon_dark
+          ui5Theme: sap_horizon_dark
